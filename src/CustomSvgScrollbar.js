@@ -12,10 +12,10 @@ function CustomSvgScrollbar(props) {
 
   const containerHeight = 600;
 
-  let hasBrushed = false;
   const brushing = {
     byDragDrop: false,
-    byClick: false
+    byClick: false,
+    hasBrushed: false,
   };
 
   const brush = brushY()
@@ -44,10 +44,10 @@ function CustomSvgScrollbar(props) {
   }
 
   function brushed({ selection, sourceEvent }) {
-    if (sourceEvent === undefined && hasBrushed && !brushing.byClick) return;
+    if (!selection || (!sourceEvent && brushing.hasBrushed && !brushing.byClick)) return;
 
     brushing.byDragDrop = true;
-    hasBrushed = true;
+    brushing.hasBrushed = true;
 
     const top = selection[0] / containerHeight;
     container.current.scrollTo({ top: top * container.current.scrollHeight });
@@ -64,8 +64,7 @@ function CustomSvgScrollbar(props) {
     g
       .call(brush)
       .call(g => g.select('.overlay')
-          .datum({type: 'selection'})
-          .on('mousedown touchstart', beforeBrushStarted));
+        .on('mousedown touchstart', beforeBrushStarted));
 
     g.select('.selection').attr('cursor', 'ns-resize');
     g.selectAll('.handle').remove();
