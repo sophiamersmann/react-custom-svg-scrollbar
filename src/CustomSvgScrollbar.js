@@ -61,21 +61,24 @@ function CustomSvgScrollbar(props) {
   useEffect(() => {
     const g = select(gBrush.current);
 
+    // set height of brush
+    const visible = container.current.clientHeight / container.current.scrollHeight;
+    brushHeight.current = visible * containerHeight;
+
+    // initialize brush
     g
       .call(brush)
+      .call(brush.move, [0, brushHeight.current])
       .call(g => g.select('.overlay')
         .on('mousedown touchstart', beforeBrushStarted));
 
+    // customize cursor
     g.select('.selection').attr('cursor', 'ns-resize');
+    
+    // prevent brush resize
     g.selectAll('.handle').remove();
   });
 
-  useEffect(() => {
-    const visible = container.current.clientHeight / container.current.scrollHeight;
-    brushHeight.current = visible * containerHeight;
-    select(gBrush.current)
-      .call(brush.move, [0, visible * containerHeight]);
-  });
 
   let ticking = false;
   let top = 0;
