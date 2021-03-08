@@ -1,6 +1,6 @@
 # Custom SVG scrollbar
 
-**VERY HACKY CODE TO PROVE A POINT**
+**!!! VERY HACKY CODE TO PROVE A POINT !!!**
 
 Live at: https://sophiamersmann.github.io/react-custom-svg-scrollbar/
 
