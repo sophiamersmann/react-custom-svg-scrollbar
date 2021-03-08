@@ -1,0 +1,16 @@
+.custom-svg-scrollbar {
+  display: grid;
+  grid-template-columns: 400px 50px;
+}
+
+.container {
+  width: 400px;
+  overflow: auto;
+  background-color: lightblue;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+}
+
+.container::-webkit-scrollbar { /* WebKit */
+  width: 0px;
+}
