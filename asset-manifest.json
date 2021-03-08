@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-custom-svg-scrollbar/static/css/main.1c324f67.chunk.css",
-    "main.js": "/react-custom-svg-scrollbar/static/js/main.dd872ed1.chunk.js",
-    "main.js.map": "/react-custom-svg-scrollbar/static/js/main.dd872ed1.chunk.js.map",
+    "main.js": "/react-custom-svg-scrollbar/static/js/main.20d7d6ae.chunk.js",
+    "main.js.map": "/react-custom-svg-scrollbar/static/js/main.20d7d6ae.chunk.js.map",
     "runtime-main.js": "/react-custom-svg-scrollbar/static/js/runtime-main.2c6deb46.js",
     "runtime-main.js.map": "/react-custom-svg-scrollbar/static/js/runtime-main.2c6deb46.js.map",
     "static/js/2.b99967a2.chunk.js": "/react-custom-svg-scrollbar/static/js/2.b99967a2.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.2c6deb46.js",
     "static/js/2.b99967a2.chunk.js",
     "static/css/main.1c324f67.chunk.css",
-    "static/js/main.dd872ed1.chunk.js"
+    "static/js/main.20d7d6ae.chunk.js"
   ]
 }
