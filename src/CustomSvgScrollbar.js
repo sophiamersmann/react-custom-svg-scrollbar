@@ -5,6 +5,14 @@ import { brushY } from 'd3-brush';
 
 import './CustomSvgScrollbar.css';
 
+function styles(styles) {
+  return function(selection) {
+    for (let property in styles) {
+      selection.style(property, styles[property]);
+    }
+  };
+}
+
 function CustomSvgScrollbar(props) {
   const container = useRef(null);
   const gBrush = useRef(null);
@@ -75,6 +83,13 @@ function CustomSvgScrollbar(props) {
     
     // prevent brush resize
     g.selectAll('.handle').remove();
+  });
+
+  useEffect(() => {
+    // apply styles to the handle
+    select(gBrush.current)
+      .select('.selection')
+      .call(styles(props.handleStyle));
   });
 
   let ticking = false;
