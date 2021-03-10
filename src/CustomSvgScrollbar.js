@@ -10,8 +10,6 @@ function CustomSvgScrollbar(props) {
   const gBrush = useRef(null);
   const brushHeight = useRef(0);
 
-  const containerHeight = 600;
-
   const brushing = {
     byDragDrop: false,
     byClick: false,
@@ -29,7 +27,7 @@ function CustomSvgScrollbar(props) {
     const dy = brushHeight.current;
     const [[,cy]] = pointers(e);
     const [y0, y1] = [cy - dy / 2, cy + dy / 2];
-    const [Y0, Y1] = [0, containerHeight];
+    const [Y0, Y1] = [0, props.height];
 
     select(gBrush.current)
       .call(brush.move, y1 > Y1 ? [Y1 - dy, Y1] 
@@ -48,7 +46,7 @@ function CustomSvgScrollbar(props) {
 
     brushing.byDragDrop = true;
 
-    const top = selection[0] / containerHeight;
+    const top = selection[0] / props.height;
     container.current.scrollTo({ top: top * container.current.scrollHeight });
   }
 
@@ -63,7 +61,7 @@ function CustomSvgScrollbar(props) {
 
     // set height of brush
     const visible = container.current.clientHeight / container.current.scrollHeight;
-    brushHeight.current = visible * containerHeight;
+    brushHeight.current = visible * props.height;
 
     // initialize brush
     g
@@ -88,7 +86,7 @@ function CustomSvgScrollbar(props) {
 
     if (!ticking) {
       window.requestAnimationFrame(() => {
-        const y1 = (top / container.current.scrollHeight) * containerHeight;
+        const y1 = (top / container.current.scrollHeight) * props.height;
         select(gBrush.current)
           .call(brush.move, [y1, y1 + brushHeight.current ]);
         ticking = false;
@@ -101,17 +99,24 @@ function CustomSvgScrollbar(props) {
   return (
     <div className="custom-svg-scrollbar">
       <div
-        ref={container}
         className="container"
+        ref={container}
         onScroll={onScroll}
-        style={{height: containerHeight}}
+        style={{ height: props.height }}
       >
         {props.children}
       </div>
-      <div className="scrollbar">
-        <svg width="50" height={containerHeight}>
-          <rect width="50" height={containerHeight} fill="khaki"></rect>
-          <g ref={gBrush} className="brush"></g>
+      <div
+        className="scrollbar"
+        style={{
+          flexShrink: 0,
+          flexGrow: 0,
+          flexBasis: props.width
+        }}
+      >
+        <svg width={props.width} height={props.height}>
+          {props.track}
+          <g className="brush" ref={gBrush} />
         </svg>
       </div>
     </div>
