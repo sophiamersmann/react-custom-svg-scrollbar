@@ -5,12 +5,22 @@ import { brushY } from 'd3-brush';
 
 import './CustomSvgScrollbar.css';
 
+function styles(styles) {
+  return function(selection) {
+    for (let property in styles) {
+      selection.style(property, styles[property]);
+    }
+  };
+}
+
 function CustomSvgScrollbar(props) {
   const container = useRef(null);
   const gBrush = useRef(null);
-  const brushHeight = useRef(0);
+  const handleHeight = useRef(0);
 
-  const containerHeight = 600;
+  // required for scrolling
+  let ticking = false;
+  let top = 0;
 
   const brushing = {
     byDragDrop: false,
@@ -26,10 +36,10 @@ function CustomSvgScrollbar(props) {
   function beforeBrushStarted(e) {
     brushing.byClick = true;
 
-    const dy = brushHeight.current;
+    const dy = handleHeight.current;
     const [[,cy]] = pointers(e);
     const [y0, y1] = [cy - dy / 2, cy + dy / 2];
-    const [Y0, Y1] = [0, containerHeight];
+    const [Y0, Y1] = [0, props.height];
 
     select(gBrush.current)
       .call(brush.move, y1 > Y1 ? [Y1 - dy, Y1] 
@@ -38,7 +48,7 @@ function CustomSvgScrollbar(props) {
   }
 
   function brushStart() {
-    select(this)
+    select(gBrush.current)
       .select('.overlay')
       .attr('cursor', 'ns-resize');
   }
@@ -48,7 +58,7 @@ function CustomSvgScrollbar(props) {
 
     brushing.byDragDrop = true;
 
-    const top = selection[0] / containerHeight;
+    const top = selection[0] / props.height;
     container.current.scrollTo({ top: top * container.current.scrollHeight });
   }
 
@@ -61,15 +71,15 @@ function CustomSvgScrollbar(props) {
   useEffect(() => {
     const g = select(gBrush.current);
 
-    // set height of brush
-    const visible = container.current.clientHeight / container.current.scrollHeight;
-    brushHeight.current = visible * containerHeight;
+    // set height of brush handle
+    const visible = props.height / container.current.scrollHeight;
+    handleHeight.current = visible * props.height;
 
     // initialize brush
     g
       .call(brush)
-      .call(brush.move, [0, brushHeight.current])
-      .call(g => g.select('.overlay')
+      .call(brush.move, [0, handleHeight.current])
+      .call((g) => g.select('.overlay')
         .on('mousedown touchstart', beforeBrushStarted));
 
     // customize cursor
@@ -79,18 +89,22 @@ function CustomSvgScrollbar(props) {
     g.selectAll('.handle').remove();
   });
 
-  let ticking = false;
-  let top = 0;
+  useEffect(() => {
+    // apply styles to the handle
+    select(gBrush.current)
+      .select('.selection')
+      .call(styles(props.handleStyle));
+  });
+
   function onScroll() {
     if (brushing.byDragDrop) return;
     
     top = container.current.scrollTop;
-
     if (!ticking) {
       window.requestAnimationFrame(() => {
-        const y1 = (top / container.current.scrollHeight) * containerHeight;
+        const y1 = (top / container.current.scrollHeight) * props.height;
         select(gBrush.current)
-          .call(brush.move, [y1, y1 + brushHeight.current ]);
+          .call(brush.move, [y1, y1 + handleHeight.current]);
         ticking = false;
       });
   
@@ -101,17 +115,23 @@ function CustomSvgScrollbar(props) {
   return (
     <div className="custom-svg-scrollbar">
       <div
-        ref={container}
         className="container"
+        ref={container}
         onScroll={onScroll}
-        style={{height: containerHeight}}
+        style={{ height: props.height }}
       >
         {props.children}
       </div>
-      <div className="scrollbar">
-        <svg width="50" height={containerHeight}>
-          <rect width="50" height={containerHeight} fill="khaki"></rect>
-          <g ref={gBrush} className="brush"></g>
+      <div
+        className="scrollbar"
+        style={{ flexBasis: props.width }}
+      >
+        <svg
+          width={props.width}
+          height={props.height}
+        >
+          {props.track}
+          <g className="brush" ref={gBrush} />
         </svg>
       </div>
     </div>
