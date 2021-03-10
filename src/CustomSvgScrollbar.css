@@ -13,3 +13,8 @@
 .container::-webkit-scrollbar { /* WebKit */
   width: 0px;
 }
+
+.scrollbar {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
