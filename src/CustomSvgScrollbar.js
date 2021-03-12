@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 import { select, pointers } from 'd3-selection';
 import { brushY } from 'd3-brush';
@@ -133,5 +134,17 @@ function CustomSvgScrollbar(props) {
     </div>
   );
 }
+
+CustomSvgScrollbar.propTypes = {
+  height: PropTypes.number,
+  width: PropTypes.number,
+  track: PropTypes.node,
+  handleStyle: PropTypes.object,
+};
+
+CustomSvgScrollbar.defaultProps = {
+  height: 600,
+  width: 20,
+};
 
 export default CustomSvgScrollbar;
