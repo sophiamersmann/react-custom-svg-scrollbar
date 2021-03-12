@@ -136,7 +136,7 @@ function CustomSvgScrollbar(props) {
 }
 
 CustomSvgScrollbar.propTypes = {
-  height: PropTypes.number,
+  height: PropTypes.number.isRequired,
   width: PropTypes.number,
   track: PropTypes.node,
   handleStyle: PropTypes.object,

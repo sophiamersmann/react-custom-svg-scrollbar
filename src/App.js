@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className="app">
-      <CustomSvgScrollbar>
+      <CustomSvgScrollbar height={height}>
         <Content />
       </CustomSvgScrollbar>
 
