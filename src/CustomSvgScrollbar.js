@@ -87,7 +87,7 @@ function CustomSvgScrollbar(props) {
     // customize handle styles
     g.select('.selection')
       .attr('cursor', 'ns-resize')
-      .call(styles(props.handleStyle));
+      .call(styles(props.handleStyles));
     
     // prevent brush resize
     g.selectAll('.handle').remove();
@@ -139,7 +139,7 @@ CustomSvgScrollbar.propTypes = {
   height: PropTypes.number.isRequired,
   width: PropTypes.number,
   track: PropTypes.node,
-  handleStyle: PropTypes.object,
+  handleStyles: PropTypes.object,
 };
 
 CustomSvgScrollbar.defaultProps = {
