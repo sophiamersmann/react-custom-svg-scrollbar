@@ -18,9 +18,9 @@ Example of a fully customised scrollbar:
 
 ```javascript
 <CustomSvgScrollbar
-  height={height}
-  width={width}
-  track={<rect width={width} height={height} fill="khaki" rx="10" ry="10" />}
+  height={600}
+  width={50}
+  track={<rect width={50} height={600} fill="khaki" rx="10" ry="10" />}
   handleStyles={{ fill: 'orangered', rx: '10px', ry: '10px' }}
 >
   <p>Some content...</p>
