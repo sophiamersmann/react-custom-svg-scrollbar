@@ -1,14 +1,42 @@
-# Custom SVG scrollbar
+# react-custom-svg-scrollbar
 
-**!!! VERY HACKY CODE TO PROVE A POINT !!!**
+Custom SVG scrollbar made with React and [d3-brush](https://github.com/d3/d3-brush).
 
-Live at: https://sophiamersmann.github.io/react-custom-svg-scrollbar/
+Examples: https://sophiamersmann.github.io/react-custom-svg-scrollbar/
 
-## Getting Started with Create React App
+## Usage
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the minimal configuration.
+
+```javascript
+<CustomSvgScrollbar height={600}>
+  <p>Some content...</p>
+</CustomSvgScrollbar>
+```
+
+Example of a fully customised scrollbar:
+
+```javascript
+<CustomSvgScrollbar
+  height={height}
+  width={width}
+  track={<rect width={width} height={height} fill="khaki" rx="10" ry="10" />}
+  handleStyles={{ fill: 'orangered', rx: '10px', ry: '10px' }}
+>
+  <p>Some content...</p>
+</CustomSvgScrollbar>
+```
+
+### `<CustomSvgScrollbar>` Props
+
+* `height`: (Number) Height of the content and scrollbar (required, default: 600)
+* `width`: (Number) Width of the scrollbar (default: 20)
+* `track`: (Node) SVG elements rendered on track
+* `handleStyles`: (Object) CSS styles applied to the handle 
 
 ### Available Scripts
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
