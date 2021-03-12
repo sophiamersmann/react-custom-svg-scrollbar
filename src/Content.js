@@ -1,6 +1,8 @@
+import './Content.css';
+
 function Content() {
   return (
-    <div>
+    <div className="content">
       <h1>B. UMWELT IM KOPF</h1>
       <p>
         Das Klimaabkommen von Paris ist ein Meilenstein für die Rettung unseres Planeten. Wir haben das Wissen, die Technik und den Erfinder\*innengeist, um die Klimakatastrophe noch abzuwenden. Wir stehen deshalb jetzt vor einer Entscheidung, die unser Leben und das Leben unserer Kinder prägen wird. Kämpfen wir für den Erhalt unserer natürlichen Lebensgrundlagen oder sägen wir weiter an dem Ast, auf dem wir sitzen? Setzen wir auf dreckige Kohle wie Union und SPD oder auf schmutziges Öl wie Trump und Putin? Oder brechen wir auf in ein neues, grünes Zeitalter?
