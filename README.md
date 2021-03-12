@@ -27,14 +27,14 @@ Example of a fully customised scrollbar:
 </CustomSvgScrollbar>
 ```
 
-### `<CustomSvgScrollbar>` Props
+#### `<CustomSvgScrollbar>` Props
 
 * `height`: (Number) Height of the content and scrollbar (required, default: 600)
 * `width`: (Number) Width of the scrollbar (default: 20)
 * `track`: (Node) SVG elements rendered on track
 * `handleStyles`: (Object) CSS styles applied to the handle 
 
-### Available Scripts
+## Available Scripts
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
