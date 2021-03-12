@@ -1,4 +1,6 @@
 .app {
-  width: 400px;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
   margin: 2rem;
 }
