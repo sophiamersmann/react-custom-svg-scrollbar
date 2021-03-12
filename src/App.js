@@ -17,7 +17,7 @@ function App() {
         height={height}
         width={width}
         track={<rect width={width} height={height} fill="khaki" rx="10" ry="10" />}
-        handleStyle={{ fill: 'orangered', rx: 10, ry: 10 }}
+        handleStyle={{ fill: 'orangered', rx: '10px', ry: '10px' }}
       >
         <Content />
       </CustomSvgScrollbar>
