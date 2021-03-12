@@ -68,6 +68,7 @@ function CustomSvgScrollbar(props) {
     brushing.hasBrushed = true
   }
 
+  // initialize brush
   useEffect(() => {
     const g = select(gBrush.current);
 
@@ -82,18 +83,13 @@ function CustomSvgScrollbar(props) {
       .call((g) => g.select('.overlay')
         .on('mousedown touchstart', beforeBrushStarted));
 
-    // customize cursor
-    g.select('.selection').attr('cursor', 'ns-resize');
+    // customize handle styles
+    g.select('.selection')
+      .attr('cursor', 'ns-resize')
+      .call(styles(props.handleStyle));
     
     // prevent brush resize
     g.selectAll('.handle').remove();
-  });
-
-  useEffect(() => {
-    // apply styles to the handle
-    select(gBrush.current)
-      .select('.selection')
-      .call(styles(props.handleStyle));
   });
 
   function onScroll() {
