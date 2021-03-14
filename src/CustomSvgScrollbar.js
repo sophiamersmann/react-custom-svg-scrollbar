@@ -30,6 +30,8 @@ function CustomSvgScrollbar(props) {
   };
 
   const brush = brushY()
+    .filter((e) => !e.ctrlKey && !e.button
+      && (e.metaKey || e.target.__data__.type !== 'overlay'))
     .on('start', brushStart)
     .on('brush', brushed)
     .on('end', brushEnded);
