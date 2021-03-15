@@ -59,15 +59,19 @@ function CustomSvgScrollbar(props) {
   function brushed({ selection, sourceEvent }) {
     if (!selection || (!sourceEvent && brushing.hasBrushed && !brushing.byClick)) return;
 
+    const behavior = brushing.byClick ? 'smooth' : 'auto';
+
     brushing.byDragDrop = true;
 
     const top = selection[0] / props.height;
-    container.current.scrollTo({ top: top * container.current.scrollHeight });
+    container.current.scrollTo({
+      top: top * container.current.scrollHeight,
+      behavior,
+    });
   }
 
   function brushEnded() {
     brushing.byDragDrop = false;
-    brushing.byClick = false;
     brushing.hasBrushed = true
   }
 
@@ -95,9 +99,9 @@ function CustomSvgScrollbar(props) {
     g.selectAll('.handle').remove();
   });
 
-  function onScroll() {
-    if (brushing.byDragDrop) return;
-    
+  function onScroll(e) {
+    if (brushing.byDragDrop || brushing.byClick) return;
+     
     top = container.current.scrollTop;
     if (!ticking) {
       window.requestAnimationFrame(() => {
@@ -109,6 +113,8 @@ function CustomSvgScrollbar(props) {
   
       ticking = true;
     }
+
+    brushing.byClick = false;
   }
 
   return (
