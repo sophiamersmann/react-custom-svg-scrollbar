@@ -22,6 +22,7 @@ function CustomSvgScrollbar(props) {
   // required for scrolling
   let ticking = false;
   let top = 0;
+  let isScrolling;
 
   const brushing = {
     byDragDrop: false,
@@ -101,9 +102,17 @@ function CustomSvgScrollbar(props) {
     g.selectAll('.handle').remove();
   });
 
-  function onScroll(e) {
+  function onScroll() {
+    // necessary to detect whether *smooth* scrolling is done
+    // NOTE: If the user clicks on track, then scrolls,
+    // then the scrollbar and content are not in sync
+    window.clearTimeout(isScrolling);
+    isScrolling = setTimeout(() => {
+      brushing.byClick = false;
+    }, 50);
+
     if (brushing.byDragDrop || brushing.byClick) return;
-     
+    
     top = container.current.scrollTop;
     if (!ticking) {
       window.requestAnimationFrame(() => {
@@ -115,8 +124,6 @@ function CustomSvgScrollbar(props) {
   
       ticking = true;
     }
-
-    brushing.byClick = false;
   }
 
   return (
