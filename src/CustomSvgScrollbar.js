@@ -59,7 +59,9 @@ function CustomSvgScrollbar(props) {
   function brushed({ selection, sourceEvent }) {
     if (!selection || (!sourceEvent && brushing.hasBrushed && !brushing.byClick)) return;
 
-    const behavior = brushing.byClick ? 'smooth' : 'auto';
+    const behavior = !brushing.byDragDrop && brushing.byClick
+      ? 'smooth'
+      : 'auto';
 
     brushing.byDragDrop = true;
 
