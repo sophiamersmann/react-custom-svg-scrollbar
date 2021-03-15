@@ -103,7 +103,7 @@ function CustomSvgScrollbar({
   });
 
   function onScroll() {
-    if (brushing.byDragDrop) return;
+    if (!gBrush.current || brushing.byDragDrop) return;
     
     top = container.current.scrollTop;
     if (!ticking) {
