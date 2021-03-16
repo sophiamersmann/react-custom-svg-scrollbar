@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable max-len */
 import './Content.css';
 
 function Content() {
@@ -35,7 +37,7 @@ function Content() {
         Jedes Jahr sterben weltweit zehntausende Menschen, weil Stickoxide und Feinstaub die Luft verpesten und zu Lungen- und HerzKreislauf-Erkrankungen führen. Auch wenn sich bei uns der Himmel über den Städten nicht gelb einfärbt wie in vielen Städten Asiens, ist auch bei uns der Kampf für saubere Luft längst noch nicht gewonnen. Jährliche Messungen zeigen, dass vielerorts Grenzwerte bei Feinstaub und Stickoxiden überschritten werden. Hauptursache sind Millionen von Dieselautos, die infolge der Tricks und Mani pulationen der Autoindustrie die Grenzwerte im Alltagsbetrieb oft um ein Vielfaches überschreiten. Wir wollen, dass die betroffenen Autos so schnell wie möglich auf Kosten der Hersteller nachgerüstet werden, damit die Halter\*innen nicht die Leidtragenden von Fahrverboten sind, die die Bundesregierung mit ihrer Untätigkeit zu verantworten hat. Um die Menschen zu schützen und die Schadstoffbelastung der Atemluft zu verringern, wollen wir eine blaue Plakette einführen, emissionsfreie Mobilität fördern, einen Großteil der Beförderungsleistung auf den ÖPNV und das Rad verschieben, die notwendige Nachrüstung von Baumaschinen, Dieselloks et cetera fördern und so die Einhaltung strenger Luftreinhaltungsnormen sicherstellen. Nur so kann es gelingen, die Luft in unseren Städten sauber zu bekommen. Mit verbindlichen Grenzwerten für Innenraumluft werden wir zudem die gesundheitliche Belastung in Wohnungen und Büros etwa durch Emissionen aus Laserdruckern oder Kopierern reduzieren. Um Betroffene nicht weiter mit den gesundheitlichen und finanziellen Folgen belasteter Wohn? und Arbeitsräume alleinzulassen, wollen wir anlassbezogene Luftschadstoffmessungen für Innenräume und Schadstoffsanierungen im Gebäudebestand fördern.
       </p>
     </div>
-  )
+  );
 }
 
 export default Content;

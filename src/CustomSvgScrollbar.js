@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,19 +8,19 @@ import { brushY } from 'd3-brush';
 import './CustomSvgScrollbar.css';
 
 function applyStyles(styles) {
-  return function(selection) {
-    for (let property in styles) {
-      selection.style(property, styles[property]);
-    }
+  return (selection) => {
+    Object.entries(styles).forEach(([property, value]) => {
+      selection.style(property, value);
+    });
   };
 }
 
 function CustomSvgScrollbar({
-  height=600,
-  width=20,
-  track,
-  handleStyles,
-  children
+  height = 600,
+  width = 20,
+  track = null,
+  handleStyles = {},
+  children,
 }) {
   const container = useRef(null);
   const gBrush = useRef(null);
@@ -35,27 +36,6 @@ function CustomSvgScrollbar({
     hasBrushed: false,
   };
 
-  const brush = brushY()
-    .filter((e) => !e.ctrlKey && !e.button
-      && (e.metaKey || e.target.__data__.type !== 'overlay'))
-    .on('start', brushStart)
-    .on('brush', brushed)
-    .on('end', brushEnded);
-
-  function beforeBrushStarted(e) {
-    brushing.byClick = true;
-
-    const dy = handleHeight.current;
-    const [[,cy]] = pointers(e);
-    const [y0, y1] = [cy - dy / 2, cy + dy / 2];
-    const [Y0, Y1] = [0, height];
-
-    select(gBrush.current)
-      .call(brush.move, y1 > Y1 ? [Y1 - dy, Y1] 
-        : y0 < Y0 ? [Y0, Y0 + dy] 
-        : [y0, y1]);
-  }
-
   function brushStart() {
     select(gBrush.current)
       .select('.overlay')
@@ -67,15 +47,38 @@ function CustomSvgScrollbar({
 
     brushing.byDragDrop = true;
 
-    const top = selection[0] / height;
     container.current.scrollTo({
-      top: top * container.current.scrollHeight,
+      top: (selection[0] / height) * container.current.scrollHeight,
     });
   }
 
   function brushEnded() {
     brushing.byDragDrop = false;
-    brushing.hasBrushed = true
+    brushing.hasBrushed = true;
+  }
+
+  const brush = brushY()
+    .filter((e) => !e.ctrlKey && !e.button
+      && (e.metaKey || e.target.__data__.type !== 'overlay'))
+    .on('start', brushStart)
+    .on('brush', brushed)
+    .on('end', brushEnded);
+
+  function beforeBrushStarted(e) {
+    brushing.byClick = true;
+
+    const dy = handleHeight.current;
+    const [[, cy]] = pointers(e);
+    const [y0, y1] = [cy - dy / 2, cy + dy / 2];
+    const [Y0, Y1] = [0, height];
+
+    select(gBrush.current)
+      // eslint-disable-next-line no-nested-ternary
+      .call(brush.move, y1 > Y1
+        ? [Y1 - dy, Y1]
+        : y0 < Y0
+          ? [Y0, Y0 + dy]
+          : [y0, y1]);
   }
 
   // initialize brush
@@ -90,21 +93,21 @@ function CustomSvgScrollbar({
     g
       .call(brush)
       .call(brush.move, [0, handleHeight.current])
-      .call((g) => g.select('.overlay')
+      .call((gg) => gg.select('.overlay')
         .on('mousedown touchstart', beforeBrushStarted));
 
     // customize handle styles
     g.select('.selection')
       .attr('cursor', 'ns-resize')
       .call(applyStyles(handleStyles));
-    
+
     // prevent brush resize
     g.selectAll('.handle').remove();
   });
 
   function onScroll() {
     if (!gBrush.current || brushing.byDragDrop) return;
-    
+
     top = container.current.scrollTop;
     if (!ticking) {
       window.requestAnimationFrame(() => {
@@ -113,7 +116,7 @@ function CustomSvgScrollbar({
           .call(brush.move, [y1, y1 + handleHeight.current]);
         ticking = false;
       });
-  
+
       ticking = true;
     }
   }
@@ -124,7 +127,7 @@ function CustomSvgScrollbar({
         className="container"
         ref={container}
         onScroll={onScroll}
-        style={{ height: height }}
+        style={{ height }}
       >
         {children}
       </div>
@@ -148,7 +151,8 @@ CustomSvgScrollbar.propTypes = {
   height: PropTypes.number.isRequired,
   width: PropTypes.number,
   track: PropTypes.node,
-  handleStyles: PropTypes.object,
+  handleStyles: PropTypes.objectOf(PropTypes.any),
+  children: PropTypes.node.isRequired,
 };
 
 export default CustomSvgScrollbar;
